@@ -19,6 +19,6 @@ Please cite the following papers if you are using this script:
 
 <sup>[1]</sup> MacKerell A. D., et al. Improved treatment of the protein backbone in empirical force fields. J. Am. Chem. Soc. 2004, 126, 698-699.  
 <sup>[2]</sup> Wang W., et al. New force field on modeling intrinsically disordered proteins. Chem. Biol. Drug Des. 2014, 84, 253-269.  
-<sup>[2]</sup> Ye W., et al. Test and Evaluation of ff99IDPs Force Field for Intrinsically Disordered Proteins. J. Chem. Inf. Model. 2015, 55, 1021-1029.  
+<sup>[3]</sup> Ye W., et al. Test and Evaluation of ff99IDPs Force Field for Intrinsically Disordered Proteins. J. Chem. Inf. Model. 2015, 55, 1021-1029.  
 <sup>[4]</sup> Song D., et al. ff14IDPs force field improving the conformation sampling of intrinsically disordered proteins. Chem. Biol. Drug Des. 2017, 89, 5-15.  
 <sup>[5]</sup> Song D., et al. The IDP-Specific Force Field ff14IDPSFF Improves the Conformer Sampling of Intrinsically Disordered Proteins. J. Chem. Inf. Model. 2017, 57, 1166-1178.  

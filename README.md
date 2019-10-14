@@ -1,4 +1,4 @@
-# ADD-CMAP.py
+# ADD_CMAP.py
 ## Add CMAP parameters into original AMBER prmtop file
 
 &ensp;&ensp;Inorder to obtain a accurate descripion of intrinscally disorder proteins(IDPs) ensembles, grid-based energy correction maps (CMAP) method

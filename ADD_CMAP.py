@@ -97,11 +97,12 @@ def Array2String(array):
 			elif i == len(array)-1:
 				string += str(array[i])
 			else:
-				if array[i+1] == array[i]+1 and array[i] == array[i-1]+1:
-					string += ''
-				elif array[i+1] == array[i]+1 and array[i] != array[i-1]+1:
-					string += str(array[i]) + '-'
-				elif array[i+1] != array[i]+1 and array[i] == array[i-1]+1:
+				if array[i+1] == array[i]+1:
+					if array[i] == array[i-1]+1:
+						string += ''
+					else:
+						string += str(array[i]) + '-'
+				else:
 					string += str(array[i]) + ','
 	return string
 
@@ -113,7 +114,7 @@ def Display(display_mark, res_type, res_label):
 				display_type[res_label[i]] = [i+1]
 			else:
 				display_type[res_label[i]].append(i+1)
-	
+
 	if len(display_type) >= 1:
 		print('\n==%s==' % display_mark)
 		for t in display_type:
@@ -167,13 +168,15 @@ def main():
 
 	## print information
 	StartInfor()
-
+	
 	## check if the input file is exists
 	FileExists(prmtop)
 	FileExists(cmap)
 	search = re.search('.*(ff\d{2}).*', cmap)
 	if search:
 		force_field = search.group(1)
+	elif re.search('ESFF1', cmap):
+		force_field = 'ff14SB'
 
 	## defined residues name
 	known_protein = [
@@ -206,12 +209,16 @@ def main():
 	cmap_order = []
 	cmap_name = []
 	cmap_count = []
+	print('  Reading CMAP parameters of:')
 	for line in cmap_file.readlines():
 		match = re.match('%FLAG\s([\w]+)_MAP(\d?)(_?[0-9]?[0-9]?)', line)
 		if match:
 			left = '0'
 			right = '0'
-			print('  Reading CMAP parameters of %s' % Color(match.group(1), 'blue'))
+			if(len(cmap_name) % 5 == 4):
+				print('  %s' % Color(match.group(1), 'blue'))
+			else:
+				print('  %s' % Color(match.group(1), 'blue'), end = '')
 			res = match.group(1)
 			if not match.group(2):
 				cmap_type.append('Protein')
@@ -238,6 +245,8 @@ def main():
 				cmap_count[-1] += 8
 			#else:
 			#	print(line)
+	print()
+	print('Read prmtop file successfully!\n')
 	#print(cmap_name)
 	#print('  %d\t%d\t%d\t%d\t%d' % (len(cmap_parameters), len(cmap_type), len(cmap_order), len(cmap_name), len(cmap_count)))
 	if len(cmap_parameters) < 1:
@@ -463,6 +472,7 @@ def main():
 	for res in res_select_env:
 		if res_type[res] in ['Ions', 'Solvent', 'NucAcids', 'Others']:
 			res_error.append(res+1)
+	print(res_single)
 	if len(res_error) > 1:
 		print('The following selected residues are %s amino acids, ignore it!' % Color('NOT', 'red'))
 		print(Array2String(res_error))
@@ -560,7 +570,7 @@ def main():
 						  %(Color('Environment-specifi', 'blue'), Color('%s%-4d' %(res_label[i-1], i), 'red')))
 					res_strip.append(i)
 				else:
-					print(name)
+					#print(name)
 					res_cmap_env.append(name)
 					res_cmap_env_num.append(i-1)
 			else:

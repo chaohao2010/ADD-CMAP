@@ -18,6 +18,8 @@ Usage: python ADD-CMAP.py -p amber.prmtop -c CMAP_parameters -o amber_CMAP.prmto
     -o    prmtop files within CMAP parameters
     -e    option for environment-specific force field
     -s    silent mode
+  
+**Note: The new prmtop file with CMAP paramters are not supported in *cpptraj* of AMBER 16 or 18, so the original prmtop file are needed when you use *cpptraj* to analyse the MD trajectories.**
 
 Please cite the following papers if you are using this script:  
 

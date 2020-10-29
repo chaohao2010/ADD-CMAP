@@ -507,7 +507,7 @@ def main():
 			if i in res_strip:
 				continue
 			# check if cmap parameter of select residues are exists
-			match = re.match('m?([A-Z]+)',res_type[i-1])
+			match = re.match('m?(\w+)',res_type[i-1])
 			res_name = match.group(1)
 			if res_name in ['HIP', 'HIE', 'HID']:
 				res_name = 'HIS'
@@ -560,14 +560,14 @@ def main():
 					continue
 
 				# check if cmap parameter of select residues are exists
-				match = re.match('m?([A-Z]+)',res_type[i-1])
+				match = re.match('m?(\w+)',res_type[i-1])
 				res_name = match.group(1)
 				if res_name in ['HIP', 'HIE', 'HID']:
 					res_name = 'HIS'
 				elif res_name == 'CYX':
 					res_name = 'CYS'
-				match_left = re.match('m?([A-Z]+)',res_type[i-2])
-				match_right = re.match('m?([A-Z]+)',res_type[i])
+				match_left = re.match('m?(\w+)',res_type[i-2])
+				match_right = re.match('m?(\w+)',res_type[i])
 				#print('%s\t%s' % (match_left.group(1), match_right.group(1)))
 				name = '%s%s%s-0' % (Env(match_left.group(1)), res_name, Env(match_right.group(1)))
 				if name not in cmap_name:
@@ -717,9 +717,14 @@ def main():
 				cmap_dih_pointer.append(j+1)
 			elif atom_name[j] == 'C':
 				cmap_dih_pointer.append(j+1)
-		for j in range(int(res_pointer[num+1])-1, int(res_pointer[num+2])-1):
-			if atom_name[j] == 'N':
-				cmap_dih_pointer.append(j+1)
+		if num+2 < len(res_label): 
+			for j in range(int(res_pointer[num+1])-1, int(res_pointer[num+2])-1):
+				if atom_name[j] == 'N':
+					cmap_dih_pointer.append(j+1)
+		else: ## only protein in system, no water and ions
+			for j in range(int(res_pointer[num+1])-1, len(atom_name)-1):
+				if atom_name[j] == 'N':
+					cmap_dih_pointer.append(j+1)
 		for i in range(len(cmap_dih_pointer)):
 			cmap_add += '%8d' % cmap_dih_pointer[i]
 		cmap_add += '%8d\n' % (res_cmap_unique.index(name)+1)
